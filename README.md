@@ -1,7 +1,9 @@
 # 📌 M346 PA :: Bildverkleinerung
+
 Willkommen zu der offiziellen Dokumentation über unsere Projektarbeit für das Modul 346, Bildverkleinerung.
 
 ## **Inhalt**
+
 [🔹 Vorwort](#vorwort)
 <br>
 [🔹 Installation](#to-do)
@@ -11,17 +13,20 @@ Willkommen zu der offiziellen Dokumentation über unsere Projektarbeit für das 
 [🔹 Schlusswort](#schlusswort)
 
 ### To-Do
-* [ ] Setup Script
-* [ ] Cleanup Script
-* [x] Run Script
+
+- [ ] Setup Script
+- [ ] Cleanup Script
+- [x] Run Script
 
 ### Benutzung
+
 ### Schlusswort
 
 ### Vorwort
+
 Unsere Aufgabe war es einen Zip-Ordner Abzugeben. Der Ordner sollte 2 Buckets enthalt, die mit einer Lambda Funktion verknüpft sind. Die Lambda Funktion sollte ein Bild vom Bucket1 nehmen und ihn auf den Bucket2 Laden und das Bild verkleinern. Je mehr automatisiert für den Nutzer war, desto mehr Punkte würde man bekommen.
 
--------
+---
 
 <br>
 
@@ -30,13 +35,15 @@ Unsere Aufgabe war es einen Zip-Ordner Abzugeben. Der Ordner sollte 2 Buckets en
 <br>
 
 > **In diesem Testversuch haben wir zuerst selbst unter der eigenen Gruppe versucht, diese Aufgabe zu lösen.
-<br>
-Made by Sathanan**
+> <br>
+> Made by Sathanan**
 
 <br>
 
 ## **Die Aufgabenstellung**
+
 ---
+
 Richten Sie zwei Buckets auf Amazon S3 ein. Sobald ein Bild in das erste Bucket hochgeladen wird, soll automatisch, z.B. über eine Lambdafunktion eine verkleinerte Version des Bildes im
 zweiten Bucket abgelegt werden.
 
@@ -46,20 +53,26 @@ zweiten Bucket abgelegt werden.
 
 <br>
 
-
     sudo apt update
     sudo apt install curl
     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
     sudo apt-get install zip unzip
     unzip awscliv2.zip
+    aws configure
 
+![Picture](/img/img1.png "Beispiel Code")
+<br>
 
-![Beispiel Code](/img/Screenshot_2022-12-23_203747.png "Beispiel Code")
+![Picture](/img/img2.png "Beispiel Code")
 
+<br>
+
+    cd ~/.aws
 
 <br>
 
 ### 2. Für diese Aufgabe muss man zuerst 3 Buckets erstellen in dem(1. Bucket) ein Bild hochgeladen wird und in den anderen jeweils eine Lambda Funktion und das verkleinerte Bild
+
 <br>
 
     aws s3 mb s3://my-upload-bucket
@@ -74,9 +87,9 @@ zweiten Bucket abgelegt werden.
     import boto3
     import os
     import tempfile
-    
+
     from PIL import Image
-    
+
     def handler(event, context):
         # Get S3 client
         s3 = boto3.client('s3')
@@ -94,7 +107,6 @@ zweiten Bucket abgelegt werden.
 
             target_bucket = 'my-resized-bucket'
 
-
 <br>
 
 ### 4. Dieses index.py Dokument muss man zipen damit man diese Funktion per Cli speichern kann
@@ -110,6 +122,7 @@ zweiten Bucket abgelegt werden.
 <br>
 
     1. arn=$(aws iam get-role --role-name LabRole | grep Arn | awk -F '"' '{print $4}')
+
 <br>
 
     2. aws lambda create-function --function-name resize-image --runtime python3.8 --role $arn --handler index.handler --zip-file fileb://function.zip
@@ -137,9 +150,7 @@ zweiten Bucket abgelegt werden.
 
 <br>
 
-
-
--------
+---
 
 <br>
 
@@ -149,7 +160,7 @@ zweiten Bucket abgelegt werden.
 
 Buckets erstellen: <br> mit dem Befehl mb(make-bucket) haben wir einen Bucket erstellt &rarr; Befehl: aws s3 mb s3://Name-des-Buckets
 
-Lambda erstellen: <br> aws lambda create-function \ <br>--function-name my-function \ <br>  --runtime nodejs12.x \ <br>  --handler index.handler \ <br>  --zip-file fileb://function.zip \ <br>  --role arn:aws:iam::123456789012:role/lambda-role \ <br>  --memory-size 128 \ <br>  --timeout 30
+Lambda erstellen: <br> aws lambda create-function \ <br>--function-name my-function \ <br> --runtime nodejs12.x \ <br> --handler index.handler \ <br> --zip-file fileb://function.zip \ <br> --role arn:aws:iam::123456789012:role/lambda-role \ <br> --memory-size 128 \ <br> --timeout 30
 
 ### Bearbeitung
 
